@@ -6,6 +6,7 @@
 #  vmImage: ubuntu-latest
 pool: 'default'
 steps:
+#COMPILA LA SOLUCION SEGÚN ARCHIVO gradlew
 - task: Gradle@3
   inputs:
     gradleWrapperFile: 'gradlew'
