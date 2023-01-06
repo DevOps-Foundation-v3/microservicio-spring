@@ -18,11 +18,5 @@ steps:
     spotBugsAnalysis: false
   displayName: Build proyecto
 ##Definiciones para SonarCloud
-- task: SonarCloudPrepare@1
-  inputs:
-    SonarCloud: 'Sonarcloud'
-    organization: 'cristianvasquezm'
-    projectKey: 'CristianVasquezM_microservicio'
-    projectName: 'microservicio-spring'
-  displayName: Prepare SonarCloud Analysis
+
 
