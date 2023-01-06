@@ -19,4 +19,10 @@ steps:
   displayName: Build proyecto
 ##Definiciones para SonarCloud
 
-
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'analize_lab_final'
+    organization: 'cristianvasquezm'
+    projectKey: 'CristianVasquezM_microservicio'
+    projectName: 'microservicio-spring'
+  displayName: Prepare SonarCloud Analysis
