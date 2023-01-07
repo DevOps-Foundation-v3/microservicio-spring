@@ -45,3 +45,26 @@ steps:
     spotBugsAnalysis: false
   displayName: SonarCloud Analysis
   
+  
+- task: Docker@2
+  inputs:
+    containerRegistry: 'DockerHub'
+    command: 'login'
+  displayName: Docker Login
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'DockerHub'
+    repository: 'nitracis/microservicio-spring'
+    command: 'build'
+    Dockerfile: '**/Dockerfile'
+    tags: 'latest'
+  displayName: Docker Build Image
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'docker'
+    repository: 'nitracis/microservicio-spring'
+    command: 'push'
+    tags: 'latest'
+  displayName: Docker push
