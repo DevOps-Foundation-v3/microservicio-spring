@@ -34,7 +34,7 @@ steps:
 
 - task: Gradle@3  
   inputs:
-  #  gradleWrapperFile: 'gradlew'  
+    gradleWrapperFile: 'gradlew'  
     publishJUnitResults: true
     tasks: 'sonarqube'
     testResultsFiles: '**/TEST-*.xml'
