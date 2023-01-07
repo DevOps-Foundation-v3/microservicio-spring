@@ -63,7 +63,7 @@ steps:
 
 - task: Docker@2
   inputs:
-    containerRegistry: 'docker'
+    containerRegistry: 'DockerHub'
     repository: 'nitracis/microservicio-spring'
     command: 'push'
     tags: 'latest'
