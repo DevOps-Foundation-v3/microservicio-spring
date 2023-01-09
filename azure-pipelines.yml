@@ -32,18 +32,18 @@ steps:
   #--------------------------
   displayName: Prepare SonarCloud Analysis
 
-- task: Gradle@3  
-  inputs:
-    gradleWrapperFile: 'gradlew'  
-    publishJUnitResults: true
-    tasks: 'sonarqube'
-    testResultsFiles: '**/TEST-*.xml'
-    javaHomeOption: 'JDKVersion'
-    sonarQubeRunAnalysis: true
-    sqGradlePluginVersionChoice: 'specify'
-    sonarQubeGradlePluginVersion: '3.3'
-    spotBugsAnalysis: false
-  displayName: SonarCloud Analysis
+#- task: Gradle@3  
+ # inputs:
+ #   gradleWrapperFile: 'gradlew'  
+ #   publishJUnitResults: true
+ #   tasks: 'sonarqube'
+ #   testResultsFiles: '**/TEST-*.xml'
+ #   javaHomeOption: 'JDKVersion'
+ #   sonarQubeRunAnalysis: true
+ #   sqGradlePluginVersionChoice: 'specify'
+ #   sonarQubeGradlePluginVersion: '3.3'
+ #   spotBugsAnalysis: false
+ # displayName: SonarCloud Analysis
   
   
 - task: Docker@2
