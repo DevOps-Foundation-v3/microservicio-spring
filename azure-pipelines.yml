@@ -68,4 +68,3 @@ steps:
     command: 'push'
     tags: 'latest'
   displayName: Docker push
-  
