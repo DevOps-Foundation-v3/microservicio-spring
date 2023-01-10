@@ -22,6 +22,7 @@ steps:
   inputs:
     codeCoverageTool: 'JaCoCo'
     summaryFileLocation: '$(Build.SourcesDirectory)/build/reports/jacoco/test/jacocoTestReport.xml'
+  displayName: Jacoco Reporte
 
 
 #-----------------------------------  
@@ -53,7 +54,7 @@ steps:
     spotBugsAnalysis: false
   displayName: SonarCloud Analysis
  
-  
+ ## Creamos contenedor DOCKER 
 - task: Docker@2
   inputs:
     containerRegistry: 'DockerHub'
@@ -76,3 +77,17 @@ steps:
     command: 'push'
     tags: 'latest'
   displayName: Docker push
+
+- task: KubectlInstaller@0
+  inputs:
+    kubectlVersion: 'latest'
+##conectamos con Kubernetes y utilizamos archivo deployment-app
+#para hacer el despliegue
+- task: Kubernetes@1
+  inputs:
+    connectionType: 'None'
+    namespace: 'default'
+    command: 'apply'
+    arguments: '-f deployment-app.yaml'
+    secretType: 'dockerRegistry'
+    containerRegistryType: 'Azure Container Registry'
