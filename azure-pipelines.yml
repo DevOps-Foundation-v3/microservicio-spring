@@ -30,11 +30,12 @@ steps:
 - task: SonarCloudPrepare@1
   inputs:
   #Corresponde al nombre del Service connections
-  # a SonarCloud definido en Azure...
+  # a SonarCloud definido en Azure... CristianVasquezM_microservicio-spring
     SonarCloud: 'analize_lab_final'
   #Datos correspondiente a SonarCloud
     organization: 'cristianvasquezm'
-    projectKey: 'CristianVasquezM_microservicio'
+    projectKey: 'CristianVasquezM_microservicio-spring'
+    #cristianvasquezm
     projectName: 'microservicio-spring'
   #--------------------------
   displayName: Prepare SonarCloud Analysis
