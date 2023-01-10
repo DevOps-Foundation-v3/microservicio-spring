@@ -17,6 +17,12 @@ steps:
     sonarQubeRunAnalysis: false
     spotBugsAnalysis: false
   displayName: Build proyecto
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'JaCoCo'
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/MyApp/**/site/cobertura/coverage.xml'
+
 #-----------------------------------  
 ##Definiciones para SonarCloud
 #-----------------------------------  
