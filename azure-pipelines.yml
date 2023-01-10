@@ -1,9 +1,9 @@
 
 trigger:
-- {{ branch }}
+- feature-ms-eduardoTorres-mensaje
 
 pool:
-  {{ pool }}
+  vmImage: ubuntu-latest
 
 steps:
 - task: Gradle@2
