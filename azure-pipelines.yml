@@ -10,7 +10,7 @@ steps:
 - task: Gradle@3
   inputs:
     gradleWrapperFile: 'gradlew'
-    tasks: 'build jacocoTestReport'
+    tasks: 'build jacocoTestReport'     
     publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
     javaHomeOption: 'JDKVersion'
@@ -24,12 +24,18 @@ steps:
     summaryFileLocation: '$(Build.SourcesDirectory)/build/reports/jacoco/test/jacocoTestReport.xml'
     reportDirectory: '$(Build.SourcesDirectory)\build\reports\jacoco\test\html'
   displayName: Jacoco Reporte
+
 - task: BuildQualityChecks@8
   inputs:
+    checkWarnings: true
+    warningFailOption: 'build'
     checkCoverage: true
-    coverageFailOption: 'fixed'
+    coverageFailOption: 'build'
     coverageType: 'blocks'
-    coverageThreshold: '60'
+    forceCoverageImprovement: true
+    coverageUpperThreshold: '80'
+    treat0of0as100: false
+  displayName: Build Quality Check
 
 #-----------------------------------  
 ##Definiciones para SonarCloud
