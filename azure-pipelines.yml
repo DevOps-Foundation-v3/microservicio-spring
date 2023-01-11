@@ -33,7 +33,7 @@ steps:
     checkCoverage: true
     coverageFailOption: 'fixed'
     coverageType: 'lines'
-    coverageThreshold: '70'
+    coverageThreshold: '75'
   displayName: 'Check build quality'
 
 #-----------------------------------  
