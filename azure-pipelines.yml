@@ -70,3 +70,20 @@ steps:
       repository: 'GabrielIHR/microservicio-spring'
       command: 'push'
       tags: 'latest'
+      
+      
+  - task: KubectlInstaller@0
+    inputs:
+      kubectlVersion: 'latest'
+    displayName: Instalacion Kubectl
+
+
+  - task: Kubernetes@1
+    displayName: Kubernetes container deploy
+    inputs:
+      connectionType: 'None'
+      namespace: 'default'
+      command: 'apply'
+      arguments: '-f deployment-app.yaml'
+      secretType: 'dockerRegistry'
+      containerRegistryType: 'Azure Container Registry'
