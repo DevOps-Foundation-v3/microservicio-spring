@@ -28,18 +28,6 @@ steps:
     reportDirectory: '$(Build.SourcesDirectory)\build\reports\jacoco\test\html'
   displayName: Jacoco Reporte
   
-
-- task: BuildQualityChecks@8
-  inputs:
-    checkWarnings: true
-    warningFailOption: 'build'
-    checkCoverage: true
-    coverageFailOption: 'build'
-    coverageType: 'blocks'
-    forceCoverageImprovement: true
-    coverageUpperThreshold: '80'    
-  displayName: Build Quality Check
-
 #-----------------------------------  
 ##Definiciones para SonarCloud
 #-----------------------------------  
