@@ -13,14 +13,10 @@ steps:
     tasks: 'build jacocoTestReport'
     publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
-    codeCoverageToolOption: 'JaCoCo'
-    codeCoverageClassFilesDirectories: 'build/classes/main/'
     javaHomeOption: 'JDKVersion'
     sonarQubeRunAnalysis: false
     spotBugsAnalysis: false
   displayName: Build proyecto
-
-
 
 #-----------------------------------  
 ##Genera Reporte de COVERAGE
@@ -41,8 +37,7 @@ steps:
     coverageFailOption: 'build'
     coverageType: 'blocks'
     forceCoverageImprovement: true
-    coverageUpperThreshold: '80'
-    treat0of0as100: false
+    coverageUpperThreshold: '80'    
   displayName: Build Quality Check
 
 #-----------------------------------  
