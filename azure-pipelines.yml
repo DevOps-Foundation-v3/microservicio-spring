@@ -44,12 +44,10 @@ steps:
 
 - task: Gradle@3  
   inputs:
-    gradleWrapperFile: 'gradlew'
-    tasks: 'sonarqube'
+    gradleWrapperFile: 'gradlew'  
     publishJUnitResults: true
+    tasks: 'sonarqube'
     testResultsFiles: '**/TEST-*.xml'
-    codeCoverageToolOption: 'JaCoCo'
-    codeCoverageClassFilesDirectories: 'build/classes/main/'
     javaHomeOption: 'JDKVersion'
     sonarQubeRunAnalysis: true
     sqGradlePluginVersionChoice: 'specify'
