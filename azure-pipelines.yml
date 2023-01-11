@@ -70,8 +70,7 @@ steps:
       repository: 'GabrielIHR/microservicio-spring'
       command: 'push'
       tags: 'latest'
-      
-      
+
   - task: KubectlInstaller@0
     inputs:
       kubectlVersion: 'latest'
