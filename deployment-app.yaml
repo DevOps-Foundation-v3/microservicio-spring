@@ -19,4 +19,4 @@ spec:
       - name: microservicio-spring
         image: nitracis/microservicio-spring:latest
         ports:
-        - containerPort: 9085 
+        - containerPort: 8080 
