@@ -32,8 +32,7 @@ steps:
   inputs:
     checkCoverage: true
     coverageFailOption: 'fixed'
-    coverageType: 'branches'
-    treat0of0as100: true
+    coverageType: 'lines'
     coverageThreshold: '80'
   displayName: 'Check build quality'
 
