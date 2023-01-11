@@ -10,14 +10,28 @@ steps:
 - task: Gradle@3
   inputs:
     gradleWrapperFile: 'gradlew'
-    tasks: 'build jacocoTestReport'     
+    tasks: 'build jacocoTestReport'
     publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
+    codeCoverageToolOption: 'JaCoCo'
+    codeCoverageClassFilesDirectories: 'build/classes/main/'
     javaHomeOption: 'JDKVersion'
     sonarQubeRunAnalysis: false
     spotBugsAnalysis: false
   displayName: Build proyecto
 
+
+
+#-----------------------------------  
+##Genera Reporte de COVERAGE
+#-----------------------------------  
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'JaCoCo'
+    summaryFileLocation: '$(Build.SourcesDirectory)/build/reports/jacoco/test/jacocoTestReport.xml'
+    reportDirectory: '$(Build.SourcesDirectory)\build\reports\jacoco\test\html'
+  displayName: Jacoco Reporte
+  
 
 - task: BuildQualityChecks@8
   inputs:
@@ -30,16 +44,6 @@ steps:
     coverageUpperThreshold: '80'
     treat0of0as100: false
   displayName: Build Quality Check
-
-#-----------------------------------  
-##Genera Reporte de COVERAGE
-#-----------------------------------  
-- task: PublishCodeCoverageResults@1
-  inputs:
-    codeCoverageTool: 'JaCoCo'
-    summaryFileLocation: '$(Build.SourcesDirectory)/build/reports/jacoco/test/jacocoTestReport.xml'
-    reportDirectory: '$(Build.SourcesDirectory)\build\reports\jacoco\test\html'
-  displayName: Jacoco Reporte
 
 #-----------------------------------  
 ##Definiciones para SonarCloud
