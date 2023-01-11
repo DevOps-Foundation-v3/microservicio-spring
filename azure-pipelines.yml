@@ -18,12 +18,6 @@ steps:
     spotBugsAnalysis: false
   displayName: Build proyecto
 
-- task: PublishCodeCoverageResults@1
-  inputs:
-    codeCoverageTool: 'JaCoCo'
-    summaryFileLocation: '$(Build.SourcesDirectory)/build/reports/jacoco/test/jacocoTestReport.xml'
-    reportDirectory: '$(Build.SourcesDirectory)\build\reports\jacoco\test\html'
-  displayName: Jacoco Reporte
 
 - task: BuildQualityChecks@8
   inputs:
@@ -36,6 +30,16 @@ steps:
     coverageUpperThreshold: '80'
     treat0of0as100: false
   displayName: Build Quality Check
+
+#-----------------------------------  
+##Genera Reporte de COVERAGE
+#-----------------------------------  
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'JaCoCo'
+    summaryFileLocation: '$(Build.SourcesDirectory)/build/reports/jacoco/test/jacocoTestReport.xml'
+    reportDirectory: '$(Build.SourcesDirectory)\build\reports\jacoco\test\html'
+  displayName: Jacoco Reporte
 
 #-----------------------------------  
 ##Definiciones para SonarCloud
@@ -65,8 +69,10 @@ steps:
     sonarQubeGradlePluginVersion: '3.3'
     spotBugsAnalysis: false
   displayName: SonarCloud Analysis
- 
+
+#-----------------------------------   
  ## Creamos contenedor DOCKER 
+#-----------------------------------  
 - task: Docker@2
   inputs:
     containerRegistry: 'DockerHub'
@@ -90,6 +96,10 @@ steps:
     tags: 'latest'
   displayName: Docker push
 
+
+#-----------------------------------   
+ ## Kubernet 
+#-----------------------------------
 - task: KubectlInstaller@0
   inputs:
     kubectlVersion: 'latest'
