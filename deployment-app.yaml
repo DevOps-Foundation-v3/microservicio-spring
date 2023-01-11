@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: labghormazabal
+  labels:
+    app: labghormazabal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: labghormazabal
+  template:
+    metadata:
+      labels:
+        app: labghormazabal
+    spec:
+      containers:
+      - name: labghormazabal
+        image: GabrielIHR/microservicio-spring:latest
+        ports:
+        - containerPort: 8080
