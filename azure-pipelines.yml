@@ -21,7 +21,7 @@ steps:
     displayName: Construccion Proyecto Microservicio-Spring
 
 
-- task: SonarCloudPrepare@1
+  - task: SonarCloudPrepare@1
     inputs:
       SonarCloud: 'sonarcloud_final'
       organization: 'gabrielihr'
