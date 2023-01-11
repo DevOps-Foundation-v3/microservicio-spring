@@ -43,3 +43,30 @@ steps:
      sonarQubeGradlePluginVersion: '3.3'
      spotBugsAnalysis: false
     displayName: Analisis Proyecto Microservicio-Spring
+    
+  - task: DockerInstaller@0
+    inputs:
+      dockerVersion: '17.09.0-ce'
+
+  - task: Docker@2
+    displayName: iniciar docker
+    inputs:
+      containerRegistry: 'Docker'
+      command: 'login'
+
+  - task: Docker@2
+    displayName: construir imagen 
+    inputs:
+      containerRegistry: 'Docker'
+      repository: 'GabrielIHR/microservicio-spring'
+      command: 'build'
+      Dockerfile: '**/Dockerfile'
+      tags: latest
+
+  - task: Docker@2
+    displayName: Lanzar imagen 
+    inputs:
+      containerRegistry: 'Docker'
+      repository: 'GabrielIHR/microservicio-spring'
+      command: 'push'
+      tags: 'latest'
