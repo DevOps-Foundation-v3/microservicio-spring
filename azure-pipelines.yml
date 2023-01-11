@@ -19,7 +19,7 @@ steps:
   displayName: Build proyecto
 
 #-----------------------------------  
-##Genera Reporte de COVERAGE
+##Genera Reporte de 
 #-----------------------------------  
 - task: PublishCodeCoverageResults@1
   inputs:
@@ -27,7 +27,16 @@ steps:
     summaryFileLocation: '$(Build.SourcesDirectory)/build/reports/jacoco/test/jacocoTestReport.xml'
     reportDirectory: '$(Build.SourcesDirectory)\build\reports\jacoco\test\html'
   displayName: Jacoco Reporte
-  
+
+- task: BuildQualityChecks@8
+  inputs:
+    checkCoverage: true
+    coverageFailOption: 'fixed'
+    coverageType: 'branches'
+    treat0of0as100: true
+    coverageThreshold: '80'
+  displayName: 'Check build quality'
+
 #-----------------------------------  
 ##Definiciones para SonarCloud
 #-----------------------------------  
