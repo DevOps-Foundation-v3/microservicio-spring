@@ -23,7 +23,7 @@ steps:
   - task: SonarCloudPrepare@1
     inputs:
       SonarCloud: 'SonarCloud'
-      organization: 'gabrielIHR'
+      organization: 'gabrielihr'
       scannerMode: 'MSBuild'
       projectKey: 'GabrielIHR_microservicio-spring'
       projectName: 'microservicio-spring'
