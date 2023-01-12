@@ -5,8 +5,8 @@
 
 trigger:
 - feature-ms-Gabriel-hormazabal-mensaje
-pool: Default 
- #vmImage: ubuntu-latest
+pool:  
+ vmImage: ubuntu-latest
 
 steps:
   - task: Gradle@3
