@@ -62,7 +62,6 @@ steps:
     sonarQubeRunAnalysis: true
     sqGradlePluginVersionChoice: 'specify'
     sonarQubeGradlePluginVersion: '3.3'
-    findBugsRunAnalysis: true
   displayName: SonarCloud Analysis
 
 #-----------------------------------   
