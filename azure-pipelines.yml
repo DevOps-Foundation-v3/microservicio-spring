@@ -58,7 +58,7 @@ steps:
     displayName: construir imagen 
     inputs:
       containerRegistry: 'Docker'
-      repository: 'microservicio-spring'
+      repository: 'GabrielIHR/microservicio-spring'
       command: 'build'
       Dockerfile: '**/Dockerfile'
       tags: latest
@@ -67,7 +67,7 @@ steps:
     displayName: Lanzar imagen 
     inputs:
       containerRegistry: 'Docker'
-      repository: 'microservicio-spring'
+      repository: 'GabrielIHR/microservicio-spring'
       command: 'push'
       tags: 'latest'
 
