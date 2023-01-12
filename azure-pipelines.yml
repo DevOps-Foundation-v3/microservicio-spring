@@ -28,16 +28,6 @@ steps:
     reportDirectory: '$(Build.SourcesDirectory)\build\reports\jacoco\test\html'
   displayName: Jacoco Reporte
 
-- task: UseDotNet@2
-  inputs:
-    packageType: 'sdk'
-    version: '3.1.301'
-- task: DotNetCoreCLI@2
-  displayName: Restore
-  inputs:
-    command: 'restore'
-    projects: '**/*.sln' 
- 
 - task: BuildQualityChecks@8
   inputs:
     checkCoverage: true
@@ -65,11 +55,6 @@ steps:
      sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
 
   #--------------------------
-  displayName: Prepare SonarCloud Analysis
-- task: SonarCloudAnalyze@1
-  displayName: 'Run Code Analysis'
-- task: SonarCloudPublish@1
-  displayName: 'Publish Quality Gate Result'
 
 - task: Gradle@3  
   inputs:
