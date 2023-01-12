@@ -20,7 +20,15 @@ steps:
       spotBugsAnalysis: false
     displayName: Construccion Proyecto Microservicio-Spring
 
-
+  - task: SonarCloudPrepare@1
+    inputs:
+      SonarCloud: 'SonarCloud'
+      organization: 'gabrielihr'
+      scannerMode: 'MSBuild'
+      projectKey: 'GabrielIHR_microservicio-spring'
+      projectName: 'microservicio-spring'
+      projectVersion: '2.6.0'
+  
   - task: Gradle@3
     inputs:
      gradleWrapperFile: 'gradlew'
@@ -35,15 +43,6 @@ steps:
     displayName: Analisis Proyecto Microservicio-Spring
     
 
-  
-  - task: SonarCloudPrepare@1
-    inputs:
-      SonarCloud: 'SonarCloud'
-      organization: 'gabrielihr'
-      scannerMode: 'MSBuild'
-      projectKey: 'GabrielIHR_microservicio-spring'
-      projectName: 'microservicio-spring'
-      projectVersion: '2.6.0'
   
 
   - task: DockerInstaller@0
