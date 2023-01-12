@@ -1,0 +1,114 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+#pool:
+#  vmImage: ubuntu-latest
+pool: 'default'
+steps:
+#COMPILA LA SOLUCION SEGÚN ARCHIVO gradlew
+- task: Gradle@3
+  inputs:
+    gradleWrapperFile: 'gradlew'
+    tasks: 'build jacocoTestReport'
+    publishJUnitResults: true
+    testResultsFiles: '**/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    sonarQubeRunAnalysis: false
+    spotBugsAnalysis: false
+  displayName: Build proyecto
+
+#-----------------------------------  
+##Genera Reporte de 
+#-----------------------------------  
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'JaCoCo'
+    summaryFileLocation: '$(Build.SourcesDirectory)/build/reports/jacoco/test/jacocoTestReport.xml'
+    reportDirectory: '$(Build.SourcesDirectory)\build\reports\jacoco\test\html'
+  displayName: Jacoco Reporte
+
+- task: BuildQualityChecks@8
+  inputs:
+    checkCoverage: true
+    coverageFailOption: 'fixed'
+    coverageType: 'lines'
+    coverageThreshold: '70'
+  displayName: 'Check build quality'
+
+#-----------------------------------  
+##Definiciones para SonarCloud
+#-----------------------------------  
+- task: SonarCloudPrepare@1
+  inputs:
+  #Corresponde al nombre del Service connections
+  # a SonarCloud definido en Azure... CristianVasquezM_microservicio-spring
+    SonarCloud: 'analize_lab_final'
+  #Datos correspondiente a SonarCloud
+    organization: 'cristianvasquezm'
+    projectKey: 'CristianVasquezM_microservicio-spring'
+    #cristianvasquezm
+    projectName: 'microservicio-spring'
+    extraProperties: |
+     sonar.exclusions=**/obj/**,**/*.dll
+     sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/coverage.opencover.xml
+     sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
+
+  #--------------------------
+
+- task: Gradle@3  
+  inputs:
+    gradleWrapperFile: 'gradlew'
+    tasks: 'sonarqube'
+    publishJUnitResults: true
+    testResultsFiles: '**/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    sonarQubeRunAnalysis: true
+    sqGradlePluginVersionChoice: 'specify'
+    sonarQubeGradlePluginVersion: '3.3'
+  displayName: SonarCloud Analysis
+
+#-----------------------------------   
+ ## Creamos contenedor DOCKER 
+#-----------------------------------  
+- task: Docker@2
+  inputs:
+    containerRegistry: 'DockerHub'
+    command: 'login'
+  displayName: Docker Login
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'DockerHub'
+    repository: 'nitracis/microservicio-spring'
+    command: 'build'
+    Dockerfile: '**/Dockerfile'
+    tags: 'latest'
+  displayName: Docker Build Image
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'DockerHub'
+    repository: 'nitracis/microservicio-spring'
+    command: 'push'
+    tags: 'latest'
+  displayName: Docker push
+
+
+#-----------------------------------   
+ ## Kubernet 
+#-----------------------------------
+- task: KubectlInstaller@0
+  inputs:
+    kubectlVersion: 'latest'
+##conectamos con Kubernetes y utilizamos archivo deployment-app
+#para hacer el despliegue
+- task: Kubernetes@1
+  inputs:
+    connectionType: 'None'
+    namespace: 'default'
+    command: 'apply'
+    arguments: '-f deployment-app.yaml'
+    secretType: 'dockerRegistry'
+    containerRegistryType: 'Azure Container Registry'
+  displayName: Kubectl Installer
