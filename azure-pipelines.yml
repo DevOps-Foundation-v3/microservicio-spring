@@ -1,0 +1,89 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- feature-ms-Gabriel-hormazabal-mensaje
+pool:  
+ vmImage: ubuntu-latest
+
+steps:
+  - task: Gradle@3
+    inputs:
+      gradleWrapperFile: 'gradlew'
+      tasks: 'build'
+      publishJUnitResults: true
+      testResultsFiles: '*/TEST-.xml'
+      javaHomeOption: 'JDKVersion'
+      sonarQubeRunAnalysis: false
+      spotBugsAnalysis: false
+    displayName: Construccion Proyecto Microservicio-Spring
+
+  - task: SonarCloudPrepare@1
+    inputs:
+      SonarCloud: 'SonarCloud'
+      organization: 'gabrielihr'
+      scannerMode: 'MSBuild'
+      projectKey: 'GabrielIHR_microservicio-spring'
+      projectName: 'microservicio-spring'
+      projectVersion: '2.6.0'
+  
+  - task: Gradle@3
+    inputs:
+     gradleWrapperFile: 'gradlew'
+     tasks: 'sonarqube'
+     publishJUnitResults: true
+     testResultsFiles: '*/TEST-.xml'
+     javaHomeOption: 'JDKVersion'
+     sonarQubeRunAnalysis: true
+     sqGradlePluginVersionChoice: 'specify'
+     sonarQubeGradlePluginVersion: '3.3'
+     spotBugsAnalysis: false
+    displayName: Analisis Proyecto Microservicio-Spring
+    
+
+  
+
+  - task: DockerInstaller@0
+    inputs:
+      dockerVersion: '17.09.0-ce'
+
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'Docker'
+      command: 'login'
+    displayName: iniciar docker
+
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'Docker'
+      repository: 'GabrielIHR/microservicio-spring'
+      command: 'build'
+      Dockerfile: '**/Dockerfile'
+      tags: latest
+    displayName: construir imagen
+
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'Docker'
+      repository: 'GabrielIHR/microservicio-spring'
+      command: 'push'
+      tags: 'latest'
+    displayName: Lanzar imagen 
+
+  - task: KubectlInstaller@0
+    inputs:
+      kubectlVersion: 'latest'
+    displayName: Instalacion Kubectl
+
+
+  - task: Kubernetes@1
+    inputs:
+      connectionType: 'None'
+      namespace: 'default'
+      command: 'apply'
+      arguments: '-f deployment-app.yaml'
+      secretType: 'dockerRegistry'
+      containerRegistryType: 'Azure Container Registry'
+    displayName: Kubernetes container deploy
