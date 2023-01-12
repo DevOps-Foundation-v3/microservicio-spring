@@ -49,27 +49,27 @@ steps:
       dockerVersion: '20.10.22'
 
   - task: Docker@2
-    displayName: iniciar docker
     inputs:
       containerRegistry: 'Docker'
       command: 'login'
+    displayName: iniciar docker
 
   - task: Docker@2
-    displayName: construir imagen 
     inputs:
       containerRegistry: 'Docker'
       repository: 'GabrielIHR/microservicio-spring'
       command: 'build'
       Dockerfile: '**/Dockerfile'
       tags: latest
+    displayName: construir imagen
 
   - task: Docker@2
-    displayName: Lanzar imagen 
     inputs:
       containerRegistry: 'Docker'
       repository: 'GabrielIHR/microservicio-spring'
       command: 'push'
       tags: 'latest'
+    displayName: Lanzar imagen 
 
   - task: KubectlInstaller@0
     inputs:
