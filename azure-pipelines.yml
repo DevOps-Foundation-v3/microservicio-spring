@@ -21,16 +21,6 @@ steps:
     displayName: Construccion Proyecto Microservicio-Spring
 
 
-  - task: SonarCloudPrepare@1
-    inputs:
-      SonarCloud: 'SonarCloud'
-      organization: 'gabrielihr'
-      scannerMode: 'MSBuild'
-      projectKey: 'GabrielIHR_microservicio-spring'
-      projectName: 'microservicio-spring'
-      projectVersion: '2.6.0'
-  
-
   - task: Gradle@3
     inputs:
      gradleWrapperFile: 'gradlew'
@@ -44,6 +34,18 @@ steps:
      spotBugsAnalysis: false
     displayName: Analisis Proyecto Microservicio-Spring
     
+
+  
+  - task: SonarCloudPrepare@1
+    inputs:
+      SonarCloud: 'SonarCloud'
+      organization: 'gabrielihr'
+      scannerMode: 'MSBuild'
+      projectKey: 'GabrielIHR_microservicio-spring'
+      projectName: 'microservicio-spring'
+      projectVersion: '2.6.0'
+  
+
   - task: DockerInstaller@0
     inputs:
       dockerVersion: '20.10.22'
@@ -78,7 +80,6 @@ steps:
 
 
   - task: Kubernetes@1
-    displayName: Kubernetes container deploy
     inputs:
       connectionType: 'None'
       namespace: 'default'
@@ -86,3 +87,4 @@ steps:
       arguments: '-f deployment-app.yaml'
       secretType: 'dockerRegistry'
       containerRegistryType: 'Azure Container Registry'
+    displayName: Kubernetes container deploy
